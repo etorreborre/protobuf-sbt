@@ -30,7 +30,7 @@ How To Use
 
 and add Protocol Buffers itself as a dependency:
 
-    val protobuf = "com.google.protobuf" % "protobuf-java" % "2.3.0" withSources()"
+    val protobuf = "com.google.protobuf" % "protobuf-java" % "2.3.0" withSources()
 
 **Second**, put your Protocol Buffer schemas (`*.proto`) into
 `src/main/protobuf`. If you want to put them somewhere else, be sure to let
@@ -48,7 +48,7 @@ new classes put:
 **Finally**, compile your project. protobuf-sbt will generate fresh source files
 for your schemas before it compiles things. It should *just work*.
 
-Oh, and if you want protobuf-avro to clean the generated Java sources when it
+Oh, and if you want protobuf-sbt to clean the generated Java sources when it
 cleans your compiled `.class` files, do this:
     
     override def cleanAction = super.cleanAction dependsOn(cleanProtobuf)
