@@ -25,12 +25,17 @@ How To Use
 
     class Plugins(info: sbt.ProjectInfo) extends sbt.PluginDefinition(info) {
       val codaRepo = "Coda Hale's Repository" at "http://repo.codahale.com/"
-      val protobufSBT = "com.codahale" % "protobuf-sbt" % "0.1.0"
+      val protobufSBT = "com.codahale" % "protobuf-sbt" % "0.1.1"
     }
 
 and add Protocol Buffers itself as a dependency:
 
     val protobuf = "com.google.protobuf" % "protobuf-java" % "2.3.0" withSources()
+
+and update your project class to include this trait:
+    
+    class MyProject(info: ProjectInfo) extends DefaultProject(info)
+                                       with protobuf.ProtobufCompiler
 
 **Second**, put your Protocol Buffer schemas (`*.proto`) into
 `src/main/protobuf`. If you want to put them somewhere else, be sure to let
