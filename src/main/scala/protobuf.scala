@@ -11,6 +11,7 @@ trait ProtobufCompiler extends DefaultProject {
     for (schema <- protobufSchemas.get) {
       log.info("Compiling schema %s".format(schema))
     }
+    protobufOutputPath.asFile.mkdirs()
     Process("protoc", "--java_out=%s".format(protobufOutputPath.toString) :: protobufSchemas.get.toList.map { _.toString }) ! log
     None
   } describedAs("Generates Java classes from the specified Protobuf schema files.")
