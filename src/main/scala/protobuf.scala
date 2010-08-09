@@ -1,6 +1,7 @@
 package protobuf
 
 import sbt._
+import com.dyuproject.protostuff.compiler.CompilerMain
 
 trait ProtobufCompiler extends DefaultProject {
   override def compileOrder = CompileOrder.JavaThenScala
@@ -14,8 +15,19 @@ trait ProtobufCompiler extends DefaultProject {
       log.info("Compiling schema %s".format(schema))
     }
     protobufOutputPath.asFile.mkdirs()
-    val incPath = protobufIncludePath.map(_.absolutePath).mkString("-I ", " -I ", "")
-    <x>protoc {incPath} --java_out={protobufOutputPath.absolutePath} {protobufSchemas.getPaths.mkString(" ")}</x> ! log
+
+    System.setProperty("output", "java_bean")
+    System.setProperty("encoding", "UTF-8")
+    System.setProperty("outputDir", protobufOutputPath.toString)
+    for (schema <- protobufSchemas.get) {
+      System.setProperty("source", schema.toString)
+      CompilerMain.main(Array())
+    }
+
+
+
+
+//    Process("protoc", "--java_out=%s".format(protobufOutputPath.toString) :: protobufSchemas.get.toList.map { _.toString }) ! log
     None
   } describedAs("Generates Java classes from the specified Protobuf schema files.")
   lazy val generateProtobuf = generateProtobufAction
