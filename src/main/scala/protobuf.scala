@@ -1,10 +1,12 @@
 package protobuf
 
 import sbt._
+import Process._
 
 trait ProtobufCompiler extends DefaultProject {
   override def compileOrder = CompileOrder.JavaThenScala
-  def protobufSchemas = "src" / "main" / "protobuf" ** "*.proto"
+  def protobufDirectory = "src" / "main" / "protobuf"
+  def protobufSchemas = protobufDirectory ** "*.proto"
   def protobufOutputPath = "src" / "main" / "java"
   
   def generateProtobufAction = task {
@@ -12,7 +14,7 @@ trait ProtobufCompiler extends DefaultProject {
       log.info("Compiling schema %s".format(schema))
     }
     protobufOutputPath.asFile.mkdirs()
-    Process("protoc", "--java_out=%s".format(protobufOutputPath.toString) :: protobufSchemas.get.toList.map { _.toString }) ! log
+    <x>protoc -I {protobufDirectory.absolutePath} --java_out={protobufOutputPath.absolutePath} {protobufSchemas.getPaths.mkString(" ")}</x> ! log
     None
   } describedAs("Generates Java classes from the specified Protobuf schema files.")
   lazy val generateProtobuf = generateProtobufAction
