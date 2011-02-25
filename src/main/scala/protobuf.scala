@@ -1,7 +1,6 @@
 package protobuf
 
 import sbt._
-import Process._
 
 trait ProtobufCompiler extends DefaultProject {
   override def compileOrder = CompileOrder.JavaThenScala
