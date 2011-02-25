@@ -25,7 +25,7 @@ How To Use
 
     class Plugins(info: sbt.ProjectInfo) extends sbt.PluginDefinition(info) {
       val codaRepo = "Coda Hale's Repository" at "http://repo.codahale.com/"
-      val protobufSBT = "com.codahale" % "protobuf-sbt" % "0.1.1"
+      val protobufSBT = "com.codahale" % "protobuf-sbt" % "0.1.2"
     }
 
 and add Protocol Buffers itself as a dependency:
@@ -65,5 +65,5 @@ miss. Because `clean-protobuf` will nuke it.
 License
 -------
 
-Copyright (c) 2010 Coda Hale
+Copyright (c) 2010-2011 Coda Hale
 Published under The MIT License, see LICENSE
